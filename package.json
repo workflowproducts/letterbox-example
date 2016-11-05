@@ -1,0 +1,56 @@
+{
+	"name": "letterbox-example",
+	"version": "1.0.0",
+	"description": "An example program using letterbox",
+	"main": "index.js",
+	"license": "Apache-2.0",
+	"scripts": {
+		"start": "electron .",
+		"dist": "build ."
+	},
+	"author": "Nunzio Tocci <nunzio@workflowproducts.com> (http://www.workflowproducts.com/)",
+	"build": {
+		"appId": "com.workflowproducts.postage",
+		"asar": false,
+		"mac": {
+			"category": "public.app-category.developer-tools"
+		},
+		"win": {
+			"target": "nsis"
+		},
+		"linux": {
+			"target": [
+				"deb",
+				"rpm"
+			]
+		},
+		"rpm": {
+			"depends": "postgresql-libs"
+		},
+		"deb": {
+			"depends": "libpq5"
+		},
+		"dmg": {
+			"icon": null,
+			"contents": [
+				{
+					"x": 448,
+					"y": 344,
+					"type": "link",
+					"path": "/Applications"
+				},
+				{
+					"x": 192,
+					"y": 344
+				}
+			]
+		}
+	},
+	"devDependencies": {
+		"electron": "^1.4.5",
+		"electron-builder": "^7.21.0"
+	},
+	"dependencies": {
+		"letterbox": "1.0.1"
+	}
+}
