@@ -34,4 +34,4 @@ $BODY$
 	LANGUAGE plpgsql
 	VOLATILE;
 
-GRANT EXECUTE ON todo.action_toggle_all(new_value text) TO main_user;
+GRANT EXECUTE ON FUNCTION todo.action_toggle_all(new_value text) TO main_user;
