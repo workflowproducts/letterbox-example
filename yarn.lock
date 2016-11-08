@@ -951,9 +951,9 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-letterbox@^1.0.3:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/letterbox/-/letterbox-1.0.11.tgz#c4b8eda43582510f779d227add94b7a87bf11746"
+letterbox@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/letterbox/-/letterbox-2.0.1.tgz#2c2034f5ab994ec39a556cc44e30214ec0c139e4"
   dependencies:
     electron-context-menu "^0.6.0"
     electron-window-state "^3.1.0"
@@ -964,10 +964,6 @@ letterbox@^1.0.3:
     envelope-portable-linux32 "2.1.0-build2"
     envelope-portable-linux64 "2.1.0-build1"
     envelope-portable-windows "2.1.0-build2"
-    postgresql-portable-darwin64 "9.6.0-build2"
-    postgresql-portable-linux32 "9.6.0-build2"
-    postgresql-portable-linux64 "9.6.0-build2"
-    postgresql-portable-windows "9.6.0-build2"
 
 load-json-file@^1.0.0:
   version "1.1.0"
@@ -1278,6 +1274,20 @@ plist@^2.0.1:
 plur@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/plur/-/plur-1.0.0.tgz#db85c6814f5e5e5a3b49efc28d604fec62975156"
+
+postcard@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/postcard/-/postcard-1.0.1.tgz#49614845ae5fbfbf715d09e78a3d485749d9bae6"
+  dependencies:
+    electron-context-menu "^0.6.0"
+    electron-window-state "^3.1.0"
+    fs-extra "^1.0.0"
+    hidefile "^2.0.0"
+  optionalDependencies:
+    postgresql-portable-darwin64 "9.6.0-build2"
+    postgresql-portable-linux32 "9.6.0-build2"
+    postgresql-portable-linux64 "9.6.0-build2"
+    postgresql-portable-windows "9.6.0-build2"
 
 postgresql-portable-darwin64@9.6.0-build2:
   version "9.6.0-build2"
