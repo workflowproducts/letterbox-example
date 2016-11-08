@@ -516,9 +516,9 @@ envelope-portable-darwin64@2.1.0-build1:
   version "2.1.0-build1"
   resolved "https://registry.yarnpkg.com/envelope-portable-darwin64/-/envelope-portable-darwin64-2.1.0-build1.tgz#f4403ff7752d0ea52a785ce7d4ed773e9643edb1"
 
-envelope-portable-linux32@2.1.0-build1:
-  version "2.1.0-build1"
-  resolved "https://registry.yarnpkg.com/envelope-portable-linux32/-/envelope-portable-linux32-2.1.0-build1.tgz#bc4e0481163a80f7a70d03eb860e82e3a18eabf7"
+envelope-portable-linux32@2.1.0-build2:
+  version "2.1.0-build2"
+  resolved "https://registry.yarnpkg.com/envelope-portable-linux32/-/envelope-portable-linux32-2.1.0-build2.tgz#ca84564316145b1ac3e00a86a09c67989e7e3f3e"
 
 envelope-portable-linux64@2.1.0-build1:
   version "2.1.0-build1"
@@ -952,8 +952,8 @@ lcid@^1.0.0:
     invert-kv "^1.0.0"
 
 letterbox@^1.0.3:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/letterbox/-/letterbox-1.0.9.tgz#1d45ac88ebc390a1f6439ba846e9fa0dbc9ce7ee"
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/letterbox/-/letterbox-1.0.11.tgz#c4b8eda43582510f779d227add94b7a87bf11746"
   dependencies:
     electron-context-menu "^0.6.0"
     electron-window-state "^3.1.0"
@@ -961,7 +961,7 @@ letterbox@^1.0.3:
     hidefile "^2.0.0"
   optionalDependencies:
     envelope-portable-darwin64 "2.1.0-build1"
-    envelope-portable-linux32 "2.1.0-build1"
+    envelope-portable-linux32 "2.1.0-build2"
     envelope-portable-linux64 "2.1.0-build1"
     envelope-portable-windows "2.1.0-build2"
     postgresql-portable-darwin64 "9.6.0-build2"
