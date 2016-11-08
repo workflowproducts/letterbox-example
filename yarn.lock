@@ -952,8 +952,8 @@ lcid@^1.0.0:
     invert-kv "^1.0.0"
 
 letterbox@^2.0.0:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/letterbox/-/letterbox-2.0.2.tgz#514b9ec07a2936989fbc10db41c52219be955c06"
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/letterbox/-/letterbox-2.0.3.tgz#d3bffe1b7529c7b7430de16f17cd4da0e8423c73"
   dependencies:
     electron-context-menu "^0.6.0"
     electron-window-state "^3.1.0"
