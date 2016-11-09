@@ -33,3 +33,10 @@ app.on('quit', function() {
 	letterbox.quit();
 	postcard.quit();
 });
+
+
+// Quit when all windows are closed.
+app.on('window-all-closed', function () {
+	app.quit();
+});
+
