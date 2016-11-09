@@ -30,6 +30,7 @@ What we need to do now is fetch all the appropriate binaries for the platform we
   yarn install
   
 Example output:
+```
   yarn install v0.16.1
   [1/4] 🔍  Resolving packages...
   [2/4] 🚚  Fetching packages...
@@ -41,7 +42,8 @@ Example output:
   [4/4] 📃  Building fresh packages...
   success Saved lockfile.
   ✨  Done in 69.71s.
-  
+```
+
 Note that we got several warnings about incompatibilities. These are ok. Usually it means that we did load the appropriate binary, but that an inapproriate one was not loaded.
 
 ### Do we have a correct and complete setup?
@@ -121,18 +123,22 @@ Next we'll review all the files that you need to write to make this app come tog
 
 The index.js file provided in this project is mostly just boilerplate that you would want to include in most any project that includes Letterbox and Postcard. I recommend you start with the existing file for your first project. Lets see what it contains.
 
+```
   const letterbox = require('letterbox'); // optional, add this if you need Envelope to ship with your app.
   const postcard = require('postcard');   // optional, add this if you need PostgreSQL to ship with your app.
   const electron = require('electron');   // required
+```
 
 It's entirely possible to create an app with Envelope and then connect to a remote instance of PostgreSQL. Or you could create an app with just PostgreSQL. If you do want a Postcard app, note that there is (going to be) a Postcard Example project on Github which is very similar to this one.
 
 The next two lines are Electon related.
 
+```
   const app = electron.app;                     // Module to control application lifecycle.
   const BrowserWindow = electron.BrowserWindow; // Module to create native browser window.
 
   let mainWindows = [];  // "let" is just a pretentious way of saying "var". This is just plain Javascript here.
+```
   
 The next section is an "on ready" function. Javascript programmers will know that, in a web page context, this event fires when the page loads. In this case, we have a Javascript engine emitting and listening for lifecycle events without a web bage, browser or renderer. Electron is a Node application, and when the application lifecycle reaches various states, events are emitted. In this case, when the node app is ready, the event is triggered and the "ready" function fires.
 
@@ -181,18 +187,22 @@ In the third section we have set a trigger on the "on closed" event. This way we
 
 In the next section we listen for the application "quit" event and shut down Envelope and PostgreSQL appropriately. This is just boilerplate that you shouldn't have to update much.
 
+```
   app.on('quit', function() {
           letterbox.quit();
           postcard.quit();
   });
+```
 
 Here we listen for the app's "window-all-closed" event. When that happens we quit the app and we're all done.
 
+```
   // Quit when all windows are closed.
   app.on('window-all-closed', function () {
           app.quit();
   });
-  
+```
+
 ### Expanding your application's menu
 
 We've covered the provided index.js file. As you work on your app, you're going to want to add stuff to the File, Edit, View or Window menu's. You do that here, in the index.js file. I'm not going to cover any of that today but I will point out that on Github alone there are 540 index.js files. A lot of those are going to have cool code that you can learn from and add features to your application's menu.
