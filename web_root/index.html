@@ -1,41 +1,160 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Here we'll define the character set and make the page able to be an iOS web home screen app -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <!-- We'll make mobile browsers use the page at a good zoom level and prevent further zooming -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+
+        <!-- Here we'll set the browser title text -->
         <title>Todo</title>
 
-        <link href="css/index.css" type="text/css" rel="stylesheet" />
+        <!-- These will get Greyspots Javascript and CSS framework -->
+        <script src="/js/greyspots.js" type="text/javascript"></script>
+        <link href="/css/greyspots.css" type="text/css" rel="stylesheet" />
+        <link href="/css/index.css" type="text/css" rel="stylesheet" />
+
+        <script>
+			window.bolCurl = false;
+
+			// before anything else, login
+			GS.ajaxJSON('/env/auth', 'action=login&username=main_user&password=password', function (data, error) {
+				if (error) {
+					GS.ajaxErrorDialog(data);
+				}
+			});
+
+			function clearCompleted() {
+                GS.ajaxJSON('/env/todo.action_todo', 'clear_completed', function (data, error) {
+                    if (!error) {
+                        document.getElementById('form-todo').refresh();
+                    } else {
+                        GS.ajaxErrorDialog(data);
+                    }
+                });
+			}
+
+			function toggleAll() {
+				GS.ajaxJSON('/env/todo.action_todo', 'toggle_items', function (data, error) {
+					if (!error) {
+						document.getElementById('form-todo').refresh();
+					} else {
+						GS.ajaxErrorDialog(data);
+					}
+				});
+			}
+
+            // on window load: let's bind everything we need
+            window.addEventListener('load', function () {
+                // when the "What needs to be complete?" box is changed: submit the insert form and clear the box
+                document.getElementById('text-insert-task').addEventListener('change', function () {
+                    document.getElementById('insert-todo').submit();
+                    this.value = '';
+                });
+
+                // when the insert form has complete a successful insert: refresh the list of todo items
+                document.getElementById('insert-todo').addEventListener('after_insert', function () {
+                    document.getElementById('form-todo').refresh();
+                });
+
+                // when the list of todo items is refreshed: run the item number action and refresh the item number
+                document.getElementById('form-todo').addEventListener('after_select', function () {
+                    GS.ajaxJSON('/env/todo.action_todo', 'number_items', function (data, error) {
+                        document.getElementById('number-items').innerHTML = (!error ? data.dat + ' Item' + (data.dat === '1' ? '' : 's') + ' Left' : '');
+                    });
+                });
+            });
+        </script>
     </head>
     <body>
-		<section class="todoapp">
-			<header  class="header">
+        <!-- Let's add a container for the header. -->
+        <gs-jumbo>
+            <!-- In this header let's add a center element with an h1 so that the text is large and centered.
+                    Let's make it say "todos". -->
+            <center>
 				<h1>todos</h1>
-				<input class="new-todo" placeholder="What needs to be done?" autofocus />
-			</header >
-			<section class="main">
-				<input class="toggle-all" type="checkbox">
-				<label for="toggle-all">Mark all as complete</label>
-				<ul class="todo-list"></ul>
-			</section>
-			<footer class="footer">
-				<span class="todo-count"></span>
-				<ul class="filters">
-					<li>
-						<a href="#/" class="selected">All</a>
-					</li>
-					<li>
-						<a href="#/active">Active</a>
-					</li>
-					<li>
-						<a href="#/completed">Completed</a>
-					</li>
-				</ul>
-				<button class="clear-completed">Clear completed</button>
-			</footer>
-		</section>
-		<footer class="info">
-			<p>Double-click to edit a todo</p>
-			<p>Based on <a href="http://todomvc.com">TodoMVC</a></p>
-		</footer>
-		<script src="js/index.js" type="text/javascript"></script>
+			</center>
+        </gs-jumbo>
+
+        <!-- Let's make the rest of the content be restrained to a maximum width by adding this gs-container with a "min-width" attribute.
+                The "padded" attribute on this gs-container makes it so that the container always has space on all sides. -->
+        <gs-container min-width="sml" padded>
+            <!-- Let's add a container to hold a toggle button and an insert form. This container will have the "flex-horizontal"
+                    attribute to make it use the CSS3 "flexbox" system. The "flexbox" system allows you to make an element take up
+                    room left over by other elements on one line. -->
+            <div flex-horizontal>
+                <!-- Here is our toggle button, with an id and an icon. -->
+                <gs-button onclick="toggleAll()" id="button-toggle-status" icononly icon="chevron-down" title="Toggle all"></gs-button>
+                <!-- Here's the insert form. The "src" tell's the form where to insert to and the "flex" is to
+                        make it expand to it's maximum width in the container. -->
+                <gs-insert id="insert-todo" src="todo.ttodo" flex>
+                    <gs-text id="text-insert-task" column="task" placeholder="What needs to be done?"></gs-text>
+                </gs-insert>
+            </div>
+            <!-- Let's add a repeating form for the todo items. The "limit" attribute is telling the form to get 200 records or less.
+                    The "where" attribute has some "doT.js" templating in it. It's reading the "show" property of the querystring (qs)
+                    and putting in the correct where clause depending on the value. -->
+            <gs-form id="form-todo" src="todo.ttodo" limit="200"
+                         where="{{? qs.show === 'active' }} complete='0' {{?? qs.show === 'completed' }} complete='-1' {{?}}">
+                <!-- Let's add a template for the form to repeat. -->
+                <template>
+                    <!-- Let's add another "flex-horizontal" container. -->
+                    <div flex-horizontal>
+                        <!-- Let's add a checkbox to update the "complete" column of a todo item. -->
+                        <gs-checkbox class="checkbox-complete" column="complete"></gs-checkbox>
+                        <!-- Let's add a text box to update the "task" column of a todo item. Let's also make it so
+                                that it takes up as much room as possible in the container with the "flex" attribute. -->
+                        <gs-memo autoresize noresize column="task" flex></gs-memo>
+                        <!-- Let's add a delete button for the todo items.
+                                The "src" attribute tells the delete button where it's deleting from,
+                                the "column" attribute makes it so that the delete button is given a value of what ID to delete,
+                                the "icononly" and "icon" attributes makes the delete button have an "x" to make it look right and finally
+                                the "onsuccess" attribute contains JS to run after a successful delete (it will refresh the todo list on success)
+                                -->
+                        <gs-delete-button src="todo.ttodo" column="id" icononly icon="times"
+                                          onsuccess="document.getElementById('form-todo').refresh();"></gs-delete-button>
+                    </div>
+                </template>
+            </gs-form>
+			<br />
+            <!-- Let's add a grid for the bottom toolbar. It'll have a small block, a large block and another small block
+                    (as determined by the "widths" attribute) it'll also reflow once the window width is 480px or narrower
+                    (as determined by the "reflow-at" attribute). This grid's font size will be set a little smaller than
+                    normal using the "small" class. -->
+            <gs-grid widths="3,7,3" reflow-at="480px" class="small">
+                <!-- Let's add a block for the number of active items left -->
+                <gs-block id="number-items"></gs-block>
+                <!-- Let's add a block for the filter buttons -->
+                <gs-block>
+
+                    <!-- Let's add an optionbox for filtering the todo list. The todo list is using the querystring to
+                            generate it's filter. So we have to make this optionbox change the querystring and refresh
+                            the todo list. We'll do that with the "onchange" attribute. You can see we use the
+                            "GS.pushQueryString" function to push changes to the querystring.
+
+                            We also have to make the optionbox select it's value using the querystring, so that when the
+                            window is refreshed it'll maintain the selected option. We'll do this with the "qs" and "value"
+                            attributes. "qs" tells the optionbox which value to get from the querystring and "value" holds
+                            the default value (in case nothing is in the querystring). The "mini" attribute removes the
+                            default optionbox border and the "no-target" attribute removes the default optionbox icons. -->
+                    <gs-optionbox onchange="GS.pushQueryString('show=' + this.value);
+                                            document.getElementById('form-todo').refresh();"
+                                  qs="show" value="all" mini no-target>
+                        <center>
+							<gs-option inline no-focus value="all">All</gs-option>
+	                        <gs-option inline no-focus value="active">Active</gs-option>
+	                        <gs-option inline no-focus value="completed">Completed</gs-option>
+						</center>
+                    </gs-optionbox>
+                </gs-block>
+                <!-- in this block we have a button for clearing the completed tasks. We want this button to go to the right,
+                        we'll acheive that by aligning the text to the right on the block and making the button inline using
+                        the "inline attribute". -->
+                <gs-block class="text-right"><gs-button onclick="clearCompleted()" no-focus id="button-clear" inline>Clear Completed</gs-button></gs-block>
+            </gs-grid>
+        </gs-container>
     </body>
 </html>
