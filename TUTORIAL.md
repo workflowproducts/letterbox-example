@@ -129,7 +129,7 @@ The index.js file provided in this project is mostly just boilerplate that you w
   const electron = require('electron');   // required
 ```
 
-It's entirely possible to create an app with Envelope and then connect to a remote instance of PostgreSQL. Or you could create an app with just PostgreSQL. If you do want a Postcard app, note that there is (going to be) a Postcard Example project on Github which is very similar to this one.
+It's entirely possible to create an app with Envelope and then connect to a remote instance of PostgreSQL. Or you could create an app with just PostgreSQL. If you do want a Postcard app, note that there is a [Postcard Example project](https://github.com/workflowproducts/postcard-example) on Github which is very similar to this one.
 
 The next two lines are Electon related.
 
