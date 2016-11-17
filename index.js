@@ -39,4 +39,3 @@ app.on('quit', function() {
 app.on('window-all-closed', function () {
 	app.quit();
 });
-
