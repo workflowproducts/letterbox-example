@@ -1,5 +1,7 @@
 ALTER ROLE postgres PASSWORD 'password';
+CREATE GROUP envelope_g;
 CREATE ROLE main_user LOGIN PASSWORD 'password';
+GRANT envelope_g To main_user;
 
 CREATE SCHEMA todo;
 GRANT USAGE ON SCHEMA todo TO main_user;
