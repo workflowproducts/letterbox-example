@@ -51,7 +51,7 @@
 		"electron-builder": "^16.8.3"
 	},
 	"dependencies": {
-		"letterbox": "^2.0.12",
+		"letterbox": "^2.0.13",
 		"postcard": "^1.0.0"
 	}
 }
