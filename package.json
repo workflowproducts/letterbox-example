@@ -1,17 +1,17 @@
 {
 	"name": "letterbox-example",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "An example program using letterbox",
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"scripts": {
 		"start": "electron .",
-		"dist": "build .",
-		"dist-win": "build --arch all"
+		"dist": "electron-builder build .",
+		"dist-win": "electron-builder build --arch all"
 	},
 	"author": "Nunzio Tocci <nunzio@workflowproducts.com> (http://www.workflowproducts.com/)",
 	"build": {
-		"appId": "com.workflowproducts.postage",
+		"appId": "com.workflowproducts.letterbox-example",
 		"asar": false,
 		"mac": {
 			"category": "public.app-category.developer-tools"
@@ -47,11 +47,11 @@
 		}
 	},
 	"devDependencies": {
-		"electron": "^1.6.2",
-		"electron-builder": "^16.8.3"
+		"electron": "^7.1.2",
+		"electron-builder": "^21.2.0"
 	},
 	"dependencies": {
-		"letterbox": "^2.0.14",
-		"postcard": "^1.0.0"
+		"letterbox": "^2.1.0",
+		"postcard": "^1.1.0"
 	}
 }
